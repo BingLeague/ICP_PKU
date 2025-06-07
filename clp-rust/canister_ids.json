@@ -1,0 +1,23 @@
+{
+  "ckbtc": {
+    "ic": "ahvj7-caaaa-aaaap-qhm5q-cai"
+  },
+  "cketh": {
+    "ic": "aaupl-pyaaa-aaaap-qhm5a-cai"
+  },
+  "clpt": {
+    "ic": "4h34y-lqaaa-aaaap-qklja-cai"
+  },
+  "cusd": {
+    "ic": "avt6g-oqaaa-aaaap-qhm6q-cai"
+  },
+  "reserve_pool": {
+    "ic": "a4qv2-yyaaa-aaaap-qhm7a-cai"
+  },
+  "staking_pool": {
+    "ic": "65hue-vaaaa-aaaap-qklga-cai"
+  },
+  "vault": {
+    "ic": "assys-diaaa-aaaap-qhm6a-cai"
+  }
+}

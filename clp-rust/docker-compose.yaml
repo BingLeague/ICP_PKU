@@ -1,0 +1,23 @@
+name: clp
+services:
+  clp:
+    image: tarolpotato/icp:1.0.0
+    container_name: clp
+    volumes:
+      - ..:/canister:delegated
+      - .config:/root/.config
+    platform: linux/amd64
+    ports:
+      - "4944:8000"
+      - "5556:55555"
+      - "35729:35729"
+    command: ["tail","-f","clp/logs/dfx.log"]
+  
+  main:
+    image: tarolpotato/icp:1.0.0
+    container_name: clp-main
+    platform: linux/amd64
+    volumes:
+      - ..:/canister:delegated
+      - .config-main:/root/.config
+    command: ["tail","-f","clp/logs/dfx.log"]

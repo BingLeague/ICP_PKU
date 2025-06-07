@@ -1,0 +1,76 @@
+type Account = record { owner : principal; subaccount : opt blob };
+type AssetConfig = record {
+  apy : nat;
+  balance : nat;
+  reward_rate : nat;
+  reward_per_token_stored : nat;
+  price : nat;
+  last_update : nat64;
+};
+type AssetInfo = record {
+  reward : nat;
+  balance : nat;
+  withdrawed : nat;
+  reward_per_token_paid : nat;
+};
+type DepositeInfo = record {
+  status : Status;
+  period_end : nat64;
+  balance : nat;
+  period : nat8;
+  period_start : nat64;
+  created_at : nat64;
+  earned : nat;
+  auto_intevetment : bool;
+  last_update : nat64;
+};
+type Error = variant {
+  Invalid;
+  InsufficientAllowance;
+  ZeroAddress;
+  TransferFailure;
+  OnlyVault;
+  InsufficientBalance;
+  PeriodError;
+  AssetRewardRateZero;
+  LessThanMinAmount;
+  InStaking;
+  BalanceIsZero;
+};
+type InitArgs = record { timer_interval_secs : nat64 };
+type PeriodConfig = record {
+  apy : nat;
+  balance : nat;
+  min_amount : nat;
+  last_update : nat64;
+  daily_reward : nat;
+};
+type Result = variant { Ok; Err : Error };
+type Result_1 = variant { Ok : nat; Err : Error };
+type Status = variant { Invalid; Valid };
+type UserAssetIdentify = record { user : principal; underlying : Account };
+type UserPeriodIdentify = record { user : principal; index : nat };
+service : (InitArgs) -> {
+  allClptBalances : () -> (
+      vec record { UserPeriodIdentify; DepositeInfo },
+    ) query;
+  allUserBalances : () -> (vec record { UserAssetIdentify; AssetInfo }) query;
+  apr : (Account) -> (nat) query;
+  assetConfig : () -> (vec record { Account; AssetConfig }) query;
+  autoIntevetment : (nat, bool) -> (Result);
+  balance : (principal) -> (nat) query;
+  balances : (UserAssetIdentify) -> (AssetInfo) query;
+  clptBalances : (principal) -> (vec record { nat; DepositeInfo }) query;
+  collateralInspection : () -> ();
+  depositeInfo : (UserPeriodIdentify) -> (DepositeInfo) query;
+  paramInit : (principal, principal, principal) -> ();
+  periodConfig : () -> (vec record { nat8; PeriodConfig }) query;
+  setAssetConfig : (Account, nat, nat) -> (Result);
+  setClptPrice : (nat) -> ();
+  setPeriodConfig : (nat8, nat, nat) -> (Result);
+  setTokenPrice : (Account, nat) -> (Result);
+  stake : (nat8, nat, bool) -> (Result);
+  unstake : (nat) -> (Result);
+  update_balance : (principal, Account, nat, bool) -> (Result);
+  withdraw : () -> (Result_1);
+}

@@ -1,0 +1,38 @@
+{
+  "ckbtc": {
+    "ic": "ahvj7-caaaa-aaaap-qhm5q-cai",
+    "local": "mxzaz-hqaaa-aaaar-qaada-cai"
+  },
+  "cketh": {
+    "ic": "aaupl-pyaaa-aaaap-qhm5a-cai",
+    "local": "ss2fx-dyaaa-aaaar-qacoq-cai"
+  },
+  "clpt": {
+    "ic": "b77ix-eeaaa-aaaaa-qaada-cai",
+    "local": "b77ix-eeaaa-aaaaa-qaada-cai"
+  },
+  "cusd": {
+    "ic": "avt6g-oqaaa-aaaap-qhm6q-cai",
+    "local": "bd3sg-teaaa-aaaaa-qaaba-cai"
+  },
+  "reserve-pool": {
+    "ic": "a4qv2-yyaaa-aaaap-qhm7a-cai",
+    "local": "br5f7-7uaaa-aaaaa-qaaca-cai"
+  },
+  "vault": {
+    "ic": "assys-diaaa-aaaap-qhm6a-cai",
+    "local": "be2us-64aaa-aaaaa-qaabq-cai"
+  },
+  "internet_identity": {
+    "ic": "rdmx6-jaaaa-aaaaa-aaadq-cai",
+    "local": "rdmx6-jaaaa-aaaaa-aaadq-cai"
+  },
+  "ledger": {
+    "ic": "ryjl3-tyaaa-aaaaa-aaaba-cai",
+    "local": "ryjl3-tyaaa-aaaaa-aaaba-cai"
+  },
+  "staking": {
+    "ic": "by6od-j4aaa-aaaaa-qaadq-cai",
+    "local": "65hue-vaaaa-aaaap-qklga-cai"
+  }
+}

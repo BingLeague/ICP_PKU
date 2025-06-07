@@ -1,0 +1,23 @@
+[package]
+name = "reserve_pool"
+version = "0.1.0"
+edition = "2018"
+
+[dependencies]
+ic-cdk = "0.17.1"
+ic-cdk-macros = "0.17.1"
+ic-ledger-types="0.14.0"
+include-base64 = "0.1"
+serde = { version = "1", features = ["derive"] }
+percent-encoding = "2.1"
+ic-certified-map = "0.4.0"
+sha2 = "0.10.2"
+base64 = "0.22.1"
+candid = "0.10"
+num-bigint = "0.4"
+ciborium = "0.2.1"
+ic-stable-structures = "0.6.5"
+num-traits = "0.2.14"
+
+[lib]
+crate-type = ["cdylib"]

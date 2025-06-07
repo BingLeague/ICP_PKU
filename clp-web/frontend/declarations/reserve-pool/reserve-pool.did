@@ -1,0 +1,40 @@
+type AssetInfo = record {
+  asset_add : nat;
+  wait_withdrawal : nat;
+  cusd_sub : nat;
+};
+type Error = variant {
+  InsufficientAllowance;
+  ZeroAddress;
+  AmountLessThanFee;
+  TransferFailure;
+  OnlyVault;
+  InsufficientBalance;
+  InvalidFee;
+  Exists;
+};
+type InitArgs = record {
+  vault : principal;
+  cusd : principal;
+  staking_pool : principal;
+};
+type Result = variant { Ok; Err : Error };
+type UserInfo = record {
+  underlyings : vec record { principal; AssetInfo };
+  balance : nat;
+  total_sub : nat;
+};
+service : (InitArgs) -> {
+  deposit : (nat) -> (Result);
+  liquidate : (nat, nat, principal) -> (nat);
+  liquidateUnderlying : (principal) -> (nat) query;
+  setFee : (nat) -> (Result);
+  stats : () -> (nat, nat) query;
+  userBalance : (principal) -> (nat) query;
+  userInfo : (principal) -> (UserInfo) query;
+  userUnderlyingBalance : (principal, principal) -> (nat) query;
+  userUnderlyingBalances : (principal) -> (vec record { principal; nat }) query;
+  withdraw : (nat) -> (Result);
+  withdrawLiquidateUnderlying : (principal, nat) -> (Result);
+  withdrawUnderlying : (principal, nat) -> (Result);
+}

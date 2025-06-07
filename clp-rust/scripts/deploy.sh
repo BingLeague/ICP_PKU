@@ -1,0 +1,95 @@
+#!/bin/env bash
+set -e
+
+bash scripts/start.sh
+
+echo "===========SETUP========="
+dfx identity new minter --storage-mode plaintext || true
+dfx identity use default
+export MINTER_ACCOUNT_ID=$(dfx --identity minter ledger account-id)
+export MINTER_PRINCIPAL=$(dfx --identity minter identity get-principal)
+export DEFAULT_ACCOUNT_ID=$(dfx --identity default ledger account-id)
+export DEFAULT_PRINCIPAL=$(dfx --identity default identity get-principal)
+export cketh_cost=2_000_000
+export cketh_fee=2_000_000_000_000
+export ckbtc_cost=2_000_000
+export ckbtc_fee=10
+export liquidate_rate=70
+
+echo "-----ledger"
+
+bash scripts/ledger/deploy.sh
+echo "-----internet_identity"
+bash scripts/internet_identity/deploy.sh
+echo "-----staking_pool"
+bash scripts/staking_pool/deploy.sh
+echo "-----clpt"
+bash scripts/clpt/deploy.sh
+echo "-----cketh"
+bash scripts/cketh/deploy.sh
+echo "-----ckbtc"
+bash scripts/ckbtc/deploy.sh
+echo "-----vault"
+bash scripts/vault/deploy.sh
+echo "-----cusd"
+bash scripts/cusd/deploy.sh
+
+echo "-----xrc"
+bash scripts/xrc/deploy.sh
+
+echo "-----reserve_pool"
+bash scripts/reserve_pool/deploy.sh
+{
+    dfx canister call staking_pool paramInit "(principal \"$(dfx canister id vault)\",principal \"$(dfx canister id clpt)\",principal \"$(dfx canister id reserve_pool)\")"
+    vault="principal \"$(dfx canister id vault)\""
+    clpt="principal \"$(dfx canister id clpt)\""
+    reserve_pool="principal \"$(dfx canister id reserve_pool)\""
+    dfx  canister call staking_pool paramInit "($vault,$clpt,$reserve_pool)"
+}
+{
+    cusd="principal \"$(dfx canister id cusd)\""
+    dfx canister call vault setCUSD  "($cusd,10000)"
+}
+
+dfx canister call reserve_pool setFee "(10_000)"
+{
+    reserve_pool="principal \"$(dfx canister id reserve_pool)\""
+    dfx canister call vault setReservePool "($reserve_pool)"
+}
+
+dfx deploy xrc_demo --with-cycles 10000000000
+
+{
+    #ckbtc deposit
+    price="100_000_000"
+    blob='"\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00"'
+    account="record{ owner =principal \"$(dfx canister id ckbtc)\"; subaccount = opt blob $blob; }"
+    amount="200_000_000"
+    dfx canister call staking_pool setAssetConfig "($account,$amount,$price)"
+
+    #ckbtc borrow
+    blob='"\02\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00"'
+    account="record{ owner =principal \"$(dfx canister id ckbtc)\"; subaccount = opt blob $blob; }"
+    amount="200_000_000"
+    dfx canister call staking_pool setAssetConfig "($account,$amount,$price)"
+
+    #cketh deposit
+    price="100_000_000"
+    blob='"\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00"'
+    account="record{ owner =principal \"$(dfx canister id cketh)\"; subaccount = opt blob $blob; }"
+    amount="200_000_000"
+    dfx canister call staking_pool setAssetConfig "($account,$amount,$price)"
+
+    #cketh borrow
+    blob='"\02\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00"'
+    account="record{ owner =principal \"$(dfx canister id cketh)\"; subaccount = opt blob $blob; }"
+    amount="200_000_000"
+    dfx canister call staking_pool setAssetConfig "($account,$amount,$price)"
+
+    #reserve pool
+    account="record{ owner =principal \"$(dfx canister id cusd)\"; subaccount = null; }"
+    amount="200_000_000"
+    dfx canister call staking_pool setAssetConfig "($account,$amount,$price)"
+}
+
+# dfx canister call vault collateralInspection

@@ -1,0 +1,11 @@
+.DS_Store
+.dfx
+.config
+.config-main
+.cache
+target
+node_modules
+dfx.log
+build
+*.pem
+users.txt

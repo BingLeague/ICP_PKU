@@ -1,0 +1,118 @@
+{
+  "canisters": {
+    "ledger": {
+      "type": "custom",
+      "candid": "library/ledger.did",
+      "wasm": "library/ledger-canister.wasm.gz",
+      "remote": {
+        "id": {
+          "ic": "ryjl3-tyaaa-aaaaa-aaaba-cai"
+        }
+      },
+      "specified_id": "ryjl3-tyaaa-aaaaa-aaaba-cai"
+    },
+    "xrc": {
+      "type": "custom",
+      "candid": "library/xrc/xrc.did",
+      "wasm": "library/xrc/xrc.wasm.gz",
+      "remote": {
+        "candid": "xrc/xrc.did",
+        "id": {
+          "ic": "uf6dk-hyaaa-aaaaq-qaaaq-cai"
+        }
+      },
+      "specified_id": "uf6dk-hyaaa-aaaaq-qaaaq-cai"
+    },
+    "xrc_demo": {
+      "main": "src/xrc_demo/main.mo",
+      "type": "motoko",
+      "dependencies": [
+        "xrc"
+      ],
+      "specified_id": "bw4dl-smaaa-aaaaa-qaacq-cai"
+    },
+    "internet_identity": {
+      "type": "custom",
+      "candid": "library/internet_identity.did",
+      "wasm": "library/internet_identity_dev.wasm.gz",
+      "remote": {
+        "id": {
+          "ic": "rdmx6-jaaaa-aaaaa-aaadq-cai"
+        }
+      },
+      "specified_id": "rdmx6-jaaaa-aaaaa-aaadq-cai"
+    },
+    "cketh": {
+      "main": "src/icrc1/ICRC1.mo",
+      "candid": "src/icrc1/ICRC1.did",
+      "type": "motoko",
+      "specified_id": "ss2fx-dyaaa-aaaar-qacoq-cai"
+    },
+    "ckbtc": {
+      "main": "src/icrc1/ICRC1.mo",
+      "type": "motoko",
+      "candid": "src/icrc1/ICRC1.did",
+      "declarations": {
+        "output": "src/declarations/icr1"
+      },
+      "specified_id": "mxzaz-hqaaa-aaaar-qaada-cai"
+    },
+    "cusd": {
+      "main": "src/icrc1/ICRC1.mo",
+      "type": "motoko",
+      "specified_id": "bd3sg-teaaa-aaaaa-qaaba-cai"
+    },
+    "vault": {
+      "type": "rust",
+      "candid": "src/vault/vault.did",
+      "package": "vault",
+      "declarations": {
+        "output": "src/declarations/vault"
+      },
+      "specified_id": "be2us-64aaa-aaaaa-qaabq-cai"
+    },
+    "reserve_pool": {
+      "type": "rust",
+      "candid": "src/reserve_pool/reserve_pool.did",
+      "package": "reserve_pool",
+      "declarations": {
+        "output": "src/declarations/reserve_pool"
+      },
+      "specified_id": "br5f7-7uaaa-aaaaa-qaaca-cai"
+    },
+    "clpt": {
+      "main": "src/icrc1/ICRC1.mo",
+      "type": "motoko",
+      "specified_id": "b77ix-eeaaa-aaaaa-qaada-cai"
+    },
+    "staking_pool": {
+      "type": "rust",
+      "candid": "src/staking_pool/staking_pool.did",
+      "package": "staking_pool",
+      "declarations": {
+        "output": "src/declarations/staking_pool"
+      },
+      "specified_id": "by6od-j4aaa-aaaaa-qaadq-cai"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    },
+    "replica": {
+      "subnet_type": "system"
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1,
+  "dfx": "0.18.0",
+  "networks": {
+    "local": {
+       "bind": "127.0.0.1:8000",
+        "replica": {
+          "subnet_type": "system"
+        }
+    }
+  }
+}
