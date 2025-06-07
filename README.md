@@ -1,2 +1,2 @@
 # ICP_PKU
-just 4 training
+just for training course of ICP&PKUBA
